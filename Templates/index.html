@@ -217,7 +217,8 @@
                     data: JSON.stringify({ date: selectedDate }),
                     success: function(response) {
                         if (response.error) {
-                            alert(response.error);
+                            console.error("Server error:", response.error);
+                            alert("Error: " + response.error);
                             return;
                         }
 
@@ -237,7 +238,17 @@
                         updateCharts(response.stats);
                     },
                     error: function(xhr, status, error) {
-                        alert("Error loading data: " + error);
+                        console.error("AJAX error:", {
+                            status: xhr.status,
+                            statusText: xhr.statusText,
+                            responseText: xhr.responseText
+                        });
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            alert("Error: " + (response.error || error));
+                        } catch (e) {
+                            alert("Error loading data: " + error);
+                        }
                     }
                 });
             });
