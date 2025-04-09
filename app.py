@@ -127,4 +127,3 @@ def get_map():
 
 if __name__ == "__main__":
     app.run(debug=True)
-can we directly embed json data instead of fetching from another folder
